@@ -1,0 +1,40 @@
+<div class="mainDIv">
+    <div class="container">
+      <div class="weather-side">
+        <div class="weather-gradient">
+        <div class="date-container">  
+            <div  *ngIf="currentWeather">
+            <h4 class="date-dayname">{{TodayDate | date:'EEEE'}}</h4><span class="date-day">{{TodayDate | date:'MMM y'}}</span><i class="location-icon" data-feather="map-pin"></i>
+            <span class="location">Location:{{ forecastWeather.city.name }}</span>
+               <div class="weather-container">
+                <i class="weather-icon" data-feather="sun"></i>
+                  <h3 class="weather-temp">Celcius:{{transform(currentWeather.main.temp-273.15)}}°C</h3>
+                  <h4 class="weather-desc">Description:{{currentWeather.weather[0].description}}</h4>   
+              </div>
+      </div>
+      
+    </div>
+     
+    <h2 style="text-align:center">Current Weather</h2>
+    <h2 style="text-align:center;">5-Day Forecast</h2>
+    <form (ngSubmit)="getforecast()" style="text-align: center;">
+        <label>City</label> &nbsp;
+      <input type="text" [(ngModel)]="location" [ngModelOptions]="{standalone: true}"  placeholder="Enter a location">&nbsp;
+      <button type="submit" class="location-button" >Search</button>
+    </form>
+    <div *ngIf="forecastWeather" style="display: flex;">
+      <div *ngFor="let forecast of forecastWeather.list;let i=index" style="display:inline-block;">
+        <div *ngIf="i <=5 && i !=0" style="display: inline-block;">
+          <span class="week-container">
+            <ul class="week-list">
+                <li></li>
+              <li class="active"><span class="day-icon">{{forecast.day}}</span><span class="day-name"></span><span class="day-temp">{{transform(forecast.main.temp-273.15)}}°C </span></li>   
+          </ul>
+        </span>
+     
+      </div>
+      </div>
+    </div>
+    </div>
+    
+    
